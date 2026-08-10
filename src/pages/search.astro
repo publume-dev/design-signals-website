@@ -1,0 +1,17 @@
+---
+import SearchPage from '../components/SearchPage.astro'
+import Document from '../layouts/Document.astro'
+import { languageSearchPath, siteConfig, ui } from '../lib/site'
+
+const contentLanguage = siteConfig.defaultContentLanguage
+const alternates = Astro.site
+  ? siteConfig.outputLanguages.map((language) => ({
+      language,
+      href: new URL(languageSearchPath(language), Astro.site).href,
+    }))
+  : []
+---
+
+<Document title={ui.search} description={ui.searchDescription} contentLanguage={contentLanguage} kind="search" alternates={alternates} noindex>
+  <SearchPage contentLanguage={contentLanguage} />
+</Document>

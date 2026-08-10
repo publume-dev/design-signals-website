@@ -1,0 +1,29 @@
+{
+  "url": "https://design-signals.publume.dev/",
+  "name": "Design Signals",
+  "description": "A bilingual daily design publication covering useful patterns, tools, and lessons for digital product teams.",
+  "tagline": "Daily design ideas grounded in craft and usability.",
+  "locale": "en",
+  "outputLanguages": [
+    "zh-CN",
+    "en"
+  ],
+  "defaultContentLanguage": "en",
+  "publisherName": "Publume Design Desk",
+  "authorName": "Design Signals",
+  "contactUrl": "",
+  "aiDisclosure": "",
+  "socialImageUrl": "",
+  "newsletterUrl": "",
+  "sponsorUrl": "",
+  "showTopics": true,
+  "showScore": false,
+  "showSources": true,
+  "footerText": "",
+  "presentation": {
+    "schemaVersion": 1,
+    "ads": {
+      "provider": "none"
+    }
+  }
+}

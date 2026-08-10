@@ -1,0 +1,13 @@
+---
+import AboutPage from '../components/AboutPage.astro'
+import Document from '../layouts/Document.astro'
+import { siteConfig, textDirection, ui } from '../lib/site'
+
+const contentLanguage = siteConfig.locale
+---
+
+<Document title={ui.about} contentLanguage={contentLanguage} kind="about">
+  <div lang={contentLanguage} dir={textDirection(contentLanguage)}>
+    <AboutPage />
+  </div>
+</Document>

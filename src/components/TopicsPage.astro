@@ -1,0 +1,32 @@
+---
+import type { TopicGroup } from '../lib/articles'
+import { formatArticleCount, languageTopicsPath, siteConfig, ui, uiLocale } from '../lib/site'
+import ArticleList from './ArticleList.astro'
+
+type Props = { groups: readonly TopicGroup[]; contentLanguage: string; selected?: TopicGroup }
+const { groups, contentLanguage, selected } = Astro.props
+---
+
+<section class="shell publume-page publume-topics" data-pagefind-ignore>
+  <header class:list={['publume-page-header', !selected && 'publume-page-header-plain']}>
+    {selected && <a class="publume-back-link" lang={uiLocale} href={languageTopicsPath(contentLanguage)}>← {ui.topics}</a>}
+    <h1 lang={selected ? contentLanguage : uiLocale}>{selected?.topic.label ?? ui.topics}</h1>
+    <p lang={uiLocale}>{selected ? formatArticleCount(selected.articles.length, contentLanguage) : siteConfig.description}</p>
+  </header>
+  {selected ? (
+    <ArticleList articles={selected.articles} contentLanguage={contentLanguage} />
+  ) : groups.length > 0 ? (
+    <ul class="publume-topic-directory">
+      {groups.map((group) => (
+        <li>
+          <a href={languageTopicsPath(contentLanguage, group.topic.id)}>
+            <strong>{group.topic.label}</strong>
+            <span lang={uiLocale}>{formatArticleCount(group.articles.length, contentLanguage)}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="publume-empty" lang={uiLocale}>{ui.noTopics}</p>
+  )}
+</section>

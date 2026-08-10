@@ -1,0 +1,42 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content'
+import AdSlot from '../../components/AdSlot.astro'
+import Document from '../../layouts/Document.astro'
+import { alternativesForArticle } from '../../lib/articles'
+import { articlePath, articleSlug, siteConfig, textDirection } from '../../lib/site'
+import Article from '../../theme/Article.astro'
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles')
+  return articles.map((article) => ({
+    params: { language: article.data.language, slug: articleSlug(article.id) },
+    props: { article, allArticles: articles },
+  }))
+}
+
+type Props = { article: CollectionEntry<'articles'>; allArticles: CollectionEntry<'articles'>[] }
+const { article, allArticles } = Astro.props
+const { Content } = await render(article)
+const alternates = Astro.site
+  ? alternativesForArticle(article, allArticles).map((alternative) => ({
+      language: alternative.data.language,
+      href: new URL(articlePath(alternative.id, alternative.data.language), Astro.site).href,
+    }))
+  : []
+---
+
+<Document
+  title={article.data.title}
+  description={article.data.summary}
+  contentLanguage={article.data.language}
+  kind="article"
+  publishedAt={article.data.publishedAt}
+  sources={siteConfig.showSources ? article.data.sourceUrls : []}
+  alternates={alternates}
+  adPlacement="articleEnd"
+>
+  <div lang={article.data.language} dir={textDirection(article.data.language)} data-pagefind-body>
+    <Article article={article}><Content /></Article>
+    <AdSlot placement="articleEnd" />
+  </div>
+</Document>

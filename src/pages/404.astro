@@ -1,0 +1,17 @@
+---
+import Document from '../layouts/Document.astro'
+import { languageArchivePath, languageHomePath, siteConfig, textDirection, ui, uiLocale } from '../lib/site'
+
+const contentLanguage = siteConfig.defaultContentLanguage
+Astro.response.status = 404
+---
+
+<Document title={ui.notFoundTitle} description={ui.notFoundDescription} contentLanguage={uiLocale} kind="notFound" noindex>
+  <section class="shell publume-page publume-not-found" lang={uiLocale} dir={textDirection(uiLocale)} data-pagefind-ignore>
+    <header class="publume-page-header"><p>404</p><h1>{ui.notFoundTitle}</h1><p>{ui.notFoundDescription}</p></header>
+    <div class="publume-actions">
+      <a href={languageHomePath(contentLanguage)}>{ui.backToHome}</a>
+      <a href={languageArchivePath(contentLanguage)}>{ui.browseArchive}</a>
+    </div>
+  </section>
+</Document>
